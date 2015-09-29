@@ -2,16 +2,16 @@ function ObjectPool () {
 	this.pool = [];
 }
 
-ObjectPool.prototype.init = function(poolSize, objectToPool) {
+ObjectPool.prototype.initPool = function (poolSize, object) {
 	for(var i=0; i<poolSize; i++) {
 		this.pool.push({
-			obj : new objectToPool()),
+			obj : new object(),
 			isFree: true
-		};
+		});
 	}
 };
 
-ObjectPool.prototype.acquire = function() {
+ObjectPool.prototype.require = function() {
 	for(var i=0, l=this.pool.length; i<l; i++) {
 		if(this.pool[i].isFree) {
 			this.pool[i].isFree = false;
@@ -19,18 +19,18 @@ ObjectPool.prototype.acquire = function() {
 		}
 	}
 
-	return this.upscalePool();
+	//return this.upscalePool();
 };
 
-ObjectPool.prototype.upscalePool = function(nb) {
+/*ObjectPool.prototype.upscalePool = function(nb) {
 	var nb = nb || 1;
 	var tmpPool = [];
 
 	for(var i=0; i<nb; i++) {
 		tmpPool.push({
-			obj : new objectToPool()),
+			obj : new objectToPool(),
 			isFree: true
-		};
+		});
 	}
 
 	this.pool.push(tmpPool);
@@ -43,4 +43,6 @@ ObjectPool.prototype.release = function(obj) {
 			this.pool[i].isFree = true;
 		}
 	}	
-};
+};*/
+
+module.exports = ObjectPool;
