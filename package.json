@@ -1,0 +1,29 @@
+{
+  "name": "pool-object",
+  "version": "1.0.0",
+  "description": "Pool object in javascript",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha",
+    "start": "http-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maks-w/poolObject.git"
+  },
+  "author": "maksw",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maks-w/poolObject/issues"
+  },
+  "homepage": "https://github.com/maks-w/poolObject#readme",
+  "devDependencies": {
+    "chai": "^3.3.0",
+    "http-server": "^0.8.5",
+    "mocha": "^2.3.3",
+    "sinon": "^1.17.1"
+  }
+}
