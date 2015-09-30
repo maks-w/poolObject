@@ -1,48 +1,56 @@
 function ObjectPool () {
-	this.pool = [];
+	this._pool = [];
+	this._object;
 }
 
-ObjectPool.prototype.initPool = function (poolSize, object) {
+ObjectPool.prototype.init = function (poolSize, object) {
+	this._pool.length = 0;
+	this._object = object;
+
 	for(var i=0; i<poolSize; i++) {
-		this.pool.push({
-			obj : new object(),
-			isFree: true
+		this._pool.push({
+			obj : new Object(object),
+			isFree: true,
+			id: i
 		});
 	}
 };
 
 ObjectPool.prototype.require = function() {
-	for(var i=0, l=this.pool.length; i<l; i++) {
-		if(this.pool[i].isFree) {
-			this.pool[i].isFree = false;
-			return this.pool[i];
+	for(var i=0, l=this._pool.length; i<l; i++) {
+		if(this._pool[i].isFree) {
+			this._pool[i].isFree = false;
+			return this._pool[i];
 		}
 	}
 
-	//return this.upscalePool();
+	console.error(" :( All objects in the pool are used, you need to add new slots");
+	return false;
 };
 
-/*ObjectPool.prototype.upscalePool = function(nb) {
-	var nb = nb || 1;
-	var tmpPool = [];
+ObjectPool.prototype.addNewSlot = function(nb) {
+	nb = nb || 1;
+	var object = this._object;
+	var poolSize = this._pool.length;
 
 	for(var i=0; i<nb; i++) {
-		tmpPool.push({
-			obj : new objectToPool(),
-			isFree: true
+		this._pool.push({
+			obj : new Object(object),
+			isFree: true,
+			id: i + poolSize
 		});
 	}
-
-	this.pool.push(tmpPool);
-	return tmpPool[0];
 };
 
 ObjectPool.prototype.release = function(obj) {
-	for(var i=0, l=this.pool.length; i<l; i++) {
-		if(this.pool[i] === obj) {
-			this.pool[i].isFree = true;
+	for(var i=0, l=this._pool.length; i<l; i++) {
+		if(this._pool[i].id === obj.id) {
+			this._pool[i].isFree = true;
+			return this._pool[i];
 		}
-	}	
-};*/
+	}
+
+	console.error(" :( this object is not a object from the pool ");	
+};
 
 module.exports = ObjectPool;
