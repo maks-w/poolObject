@@ -59,15 +59,17 @@ describe('ObjectPool()', function () {
 	});
 
 	describe('release()', function () {
-		it('should release known object from the pool', function () {
-			myObject2 = objectPool.require();
-			myObject3 = new Object({fakeObject: 'fake'});
+		it('should release object from the pool', function () {
+			myObject2 = objectPool.require();			
 			var releaseObj = objectPool.release(myObject);
 			releaseObj.id.should.equal(myObject.id);
 			releaseObj.isFree.should.equal(true);
+		});
 
+		it('should not release unknown object from the pool', function () {
+			var myObject3 = new Object({fakeObject: 'fake'});
 			releaseObj = objectPool.release(myObject3);
 			assert(!releaseObj);
-		});
+		})
 	});
 });
